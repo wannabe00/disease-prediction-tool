@@ -1,0 +1,35 @@
+
+        
+HEART DISEASE PREDICTION MODEL REPORT
+============================================================
+
+DATASET SUMMARY:
+   Training samples: 242
+   Test samples: 61
+   Features: 18
+   
+MODEL PERFORMANCE:
+              Model CV AUC Test AUC Accuracy Precision Recall F1-Score
+Logistic Regression  0.979    0.969    0.918     0.960  0.857    0.906
+      Random Forest  0.973    0.973    0.918     0.960  0.857    0.906
+                SVM  0.979    0.968    0.934     1.000  0.857    0.923
+
+BEST MODEL: Random Forest
+   Test AUC: 0.973
+   
+MODEL INTERPRETABILITY:
+   - Random Forest: Provides feature importance scores
+   - Logistic Regression: Provides coefficient interpretation
+   - SVM: Black-box model with high accuracy
+   
+DEPLOYMENT READY:
+   - Models saved and serialized
+   - Feature preprocessing pipeline included
+   - REST API integration available
+   
+⚠️  DISCLAIMER:
+   This model is for educational purposes only.
+   Always consult healthcare professionals for medical decisions.
+
+============================================================
+        
