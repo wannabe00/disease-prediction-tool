@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>
+			Heart Disease Prediction System - AI-Powered Risk Assessment
+		</title>
+
+		<!-- Bootstrap CSS -->
+		<link
+			href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css"
+			rel="stylesheet"
+		/>
+		<!-- Font Awesome -->
+		<link
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+			rel="stylesheet"
+		/>
+		<!-- Custom CSS -->
+		<link
+			href="{{ url_for('static', filename='style.css') }}"
+			rel="stylesheet"
+		/>
+	</head>
+	<body>
+		<div class="container-fluid">
+			<!-- Header -->
+			<header class="bg-primary text-white text-center py-4 mb-4">
+				<div class="container">
+					<h1 class="display-4 fw-bold mb-2">
+						<i class="fas fa-heartbeat me-3"></i>Heart Disease Prediction
+						System
+					</h1>
+					<p class="lead mb-0">
+						AI-Powered Cardiovascular Risk Assessment with DeepSeek
+						Intelligence
+					</p>
+					<small class="text-light"
+						>Educational Tool - Always Consult Healthcare
+						Professionals</small
+					>
+				</div>
+			</header>
+
+			<div class="container">
+				<div class="row g-4">
+					<!-- Left Column - Input Form -->
+					<div class="col-lg-6">
+						<div class="card h-100 shadow">
+							<div class="card-header bg-primary text-white">
+								<h3 class="card-title mb-0">
+									<i class="fas fa-user-md me-2"></i>Patient
+									Information
+								</h3>
+							</div>
+							<div class="card-body">
+								<form id="predictionForm">
+									<!-- Age Slider -->
+									<div class="mb-4">
+										<label for="age" class="form-label fw-bold">
+											Age:
+											<span id="ageValue" class="text-primary"
+												>50</span
+											>
+											years
+										</label>
+										<input
+											type="range"
+											class="form-range"
+											id="age"
+											name="age"
+											min="20"
+											max="80"
+											value="50"
+											step="1"
+										/>
+										<div
+											class="d-flex justify-content-between text-muted small"
+										>
+											<span>20</span>
+											<span>80</span>
+										</div>
+									</div>
+
+									<!-- Gender -->
+									<div class="mb-3">
+										<label class="form-label fw-bold">Gender</label>
+										<div class="row">
+											<div class="col-6">
+												<div class="form-check form-check-lg">
+													<input
+														class="form-check-input"
+														type="radio"
+														name="sex"
+														value="male"
+														id="male"
+														checked
+													/>
+													<label
+														class="form-check-label"
+														for="male"
+													>
+														<i
+															class="fas fa-mars text-primary me-1"
+														></i
+														>Male
+													</label>
+												</div>
+											</div>
+											<div class="col-6">
+												<div class="form-check form-check-lg">
+													<input
+														class="form-check-input"
+														type="radio"
+														name="sex"
+														value="female"
+														id="female"
+													/>
+													<label
+														class="form-check-label"
+														for="female"
+													>
+														<i
+															class="fas fa-venus text-primary me-1"
+														></i
+														>Female
+													</label>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<!-- Chest Pain Type -->
+									<div class="mb-3">
+										<label
+											for="chest_pain"
+											class="form-label fw-bold"
+										>
+											<i
+												class="fas fa-heartbeat text-danger me-1"
+											></i
+											>Chest Pain Type
+										</label>
+										<select
+											class="form-select"
+											id="chest_pain"
+											name="chest_pain"
+										>
+											<option value="0">Typical Angina</option>
+											<option value="1">Atypical Angina</option>
+											<option value="2">Non-Anginal Pain</option>
+											<option value="3">Asymptomatic</option>
+										</select>
+									</div>
+
+									<!-- Vital Signs Row -->
+									<div class="row g-3 mb-3">
+										<div class="col-6">
+											<label
+												for="blood_pressure"
+												class="form-label fw-bold"
+											>
+												<i
+													class="fas fa-tachometer-alt text-warning me-1"
+												></i
+												>Blood Pressure
+											</label>
+											<div class="input-group">
+												<input
+													type="number"
+													class="form-control"
+													id="blood_pressure"
+													name="blood_pressure"
+													value="120"
+													min="80"
+													max="200"
+													required
+												/>
+												<span class="input-group-text">mmHg</span>
+											</div>
+										</div>
+										<div class="col-6">
+											<label
+												for="cholesterol"
+												class="form-label fw-bold"
+											>
+												<i class="fas fa-vial text-info me-1"></i
+												>Cholesterol
+											</label>
+											<div class="input-group">
+												<input
+													type="number"
+													class="form-control"
+													id="cholesterol"
+													name="cholesterol"
+													value="200"
+													min="100"
+													max="400"
+													required
+												/>
+												<span class="input-group-text">mg/dl</span>
+											</div>
+										</div>
+									</div>
+
+									<!-- Heart Rate -->
+									<div class="mb-3">
+										<label
+											for="max_heart_rate"
+											class="form-label fw-bold"
+										>
+											<i class="fas fa-heart text-danger me-1"></i
+											>Maximum Heart Rate
+										</label>
+										<div class="input-group">
+											<input
+												type="number"
+												class="form-control"
+												id="max_heart_rate"
+												name="max_heart_rate"
+												value="150"
+												min="60"
+												max="220"
+												required
+											/>
+											<span class="input-group-text">bpm</span>
+										</div>
+									</div>
+
+									<!-- Medical Tests -->
+									<div class="row g-3 mb-3">
+										<div class="col-6">
+											<label class="form-label fw-bold"
+												>Fasting Blood Sugar > 120</label
+											>
+											<div>
+												<div class="form-check form-check-inline">
+													<input
+														class="form-check-input"
+														type="radio"
+														name="fasting_sugar"
+														value="no"
+														id="fbs_no"
+														checked
+													/>
+													<label
+														class="form-check-label"
+														for="fbs_no"
+														>No</label
+													>
+												</div>
+												<div class="form-check form-check-inline">
+													<input
+														class="form-check-input"
+														type="radio"
+														name="fasting_sugar"
+														value="yes"
+														id="fbs_yes"
+													/>
+													<label
+														class="form-check-label"
+														for="fbs_yes"
+														>Yes</label
+													>
+												</div>
+											</div>
+										</div>
+										<div class="col-6">
+											<label class="form-label fw-bold"
+												>Exercise Induced Angina</label
+											>
+											<div>
+												<div class="form-check form-check-inline">
+													<input
+														class="form-check-input"
+														type="radio"
+														name="exercise_angina"
+														value="no"
+														id="angina_no"
+														checked
+													/>
+													<label
+														class="form-check-label"
+														for="angina_no"
+														>No</label
+													>
+												</div>
+												<div class="form-check form-check-inline">
+													<input
+														class="form-check-input"
+														type="radio"
+														name="exercise_angina"
+														value="yes"
+														id="angina_yes"
+													/>
+													<label
+														class="form-check-label"
+														for="angina_yes"
+														>Yes</label
+													>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<!-- Advanced Parameters -->
+									<div class="accordion mb-4" id="advancedParams">
+										<div class="accordion-item">
+											<h2 class="accordion-header">
+												<button
+													class="accordion-button collapsed"
+													type="button"
+													data-bs-toggle="collapse"
+													data-bs-target="#advancedCollapse"
+												>
+													<i class="fas fa-cogs me-2"></i>Advanced
+													Parameters (Optional)
+												</button>
+											</h2>
+											<div
+												id="advancedCollapse"
+												class="accordion-collapse collapse"
+												data-bs-parent="#advancedParams"
+											>
+												<div class="accordion-body">
+													<div class="row g-3">
+														<div class="col-md-6">
+															<label
+																for="rest_ecg"
+																class="form-label"
+																>Rest ECG</label
+															>
+															<select
+																class="form-select"
+																id="rest_ecg"
+																name="rest_ecg"
+															>
+																<option value="0">
+																	Normal
+																</option>
+																<option value="1">
+																	ST-T Wave Abnormality
+																</option>
+																<option value="2">
+																	Left Ventricular Hypertrophy
+																</option>
+															</select>
+														</div>
+														<div class="col-md-6">
+															<label
+																for="st_depression"
+																class="form-label"
+																>ST Depression</label
+															>
+															<input
+																type="number"
+																class="form-control"
+																id="st_depression"
+																name="st_depression"
+																value="0"
+																min="0"
+																max="6"
+																step="0.1"
+															/>
+														</div>
+														<div class="col-md-6">
+															<label
+																for="slope"
+																class="form-label"
+																>Slope</label
+															>
+															<select
+																class="form-select"
+																id="slope"
+																name="slope"
+															>
+																<option value="0">
+																	Upsloping
+																</option>
+																<option value="1">Flat</option>
+																<option value="2">
+																	Downsloping
+																</option>
+															</select>
+														</div>
+														<div class="col-md-6">
+															<label
+																for="vessels"
+																class="form-label"
+																>Major Vessels (0-3)</label
+															>
+															<select
+																class="form-select"
+																id="vessels"
+																name="vessels"
+															>
+																<option value="0">0</option>
+																<option value="1">1</option>
+																<option value="2">2</option>
+																<option value="3">3</option>
+															</select>
+														</div>
+														<div class="col-md-12">
+															<label
+																for="thalassemia"
+																class="form-label"
+																>Thalassemia</label
+															>
+															<select
+																class="form-select"
+																id="thalassemia"
+																name="thalassemia"
+															>
+																<option value="0">
+																	Normal
+																</option>
+																<option value="1">
+																	Fixed Defect
+																</option>
+																<option value="2">
+																	Reversible Defect
+																</option>
+																<option value="3">
+																	Not Described
+																</option>
+															</select>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<!-- Submit Button -->
+									<div class="d-grid gap-2">
+										<button
+											type="submit"
+											class="btn btn-primary btn-lg"
+										>
+											<i class="fas fa-chart-line me-2"></i>Analyze
+											Heart Disease Risk
+										</button>
+										<button
+											type="button"
+											class="btn btn-outline-secondary"
+											onclick="loadDemoData()"
+										>
+											<i class="fas fa-flask me-2"></i>Load Demo Data
+										</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+
+					<!-- Right Column - Results -->
+					<div class="col-lg-6">
+						<div class="card h-100 shadow">
+							<div class="card-header bg-success text-white">
+								<h3 class="card-title mb-0">
+									<i class="fas fa-chart-bar me-2"></i>Analysis Results
+								</h3>
+							</div>
+							<div class="card-body">
+								<!-- Loading Spinner -->
+								<div id="loadingSpinner" class="text-center d-none">
+									<div
+										class="spinner-border text-primary mb-3"
+										style="width: 3rem; height: 3rem"
+									></div>
+									<h5>Analyzing Patient Data...</h5>
+									<p class="text-muted">
+										Processing through AI models
+									</p>
+								</div>
+
+								<!-- Results Section -->
+								<div id="resultsSection" class="d-none">
+									<!-- Risk Alert -->
+									<div class="alert alert-info" id="riskAlert">
+										<div class="d-flex align-items-center">
+											<i class="fas fa-shield-alt fa-2x me-3"></i>
+											<div>
+												<h4 id="riskLevel" class="mb-1">
+													Risk Level
+												</h4>
+												<p id="riskDescription" class="mb-0">
+													Risk description will appear here.
+												</p>
+											</div>
+										</div>
+									</div>
+
+									<!-- Probability Gauge -->
+									<div class="text-center mb-4">
+										<canvas
+											id="probabilityGauge"
+											width="300"
+											height="180"
+											class="mb-2"
+										></canvas>
+										<h5 class="text-primary">
+											Heart Disease Probability:
+											<span id="probabilityValue">0%</span>
+										</h5>
+										<div class="text-muted small">
+											Confidence:
+											<span id="confidenceValue">N/A</span>
+										</div>
+									</div>
+
+									<!-- Model Predictions Comparison -->
+									<div class="mb-4">
+										<h6 class="fw-bold mb-3">
+											<i class="fas fa-robot me-2"></i>AI Model
+											Predictions
+										</h6>
+										<div
+											id="modelResults"
+											class="model-results-container"
+										></div>
+									</div>
+
+									<!-- Basic Recommendations -->
+									<div
+										class="alert alert-light border"
+										id="basicRecommendations"
+									>
+										<h6 class="fw-bold mb-3">
+											<i
+												class="fas fa-lightbulb text-warning me-2"
+											></i
+											>Evidence-Based Recommendations
+										</h6>
+										<ol id="recommendations" class="mb-0"></ol>
+									</div>
+
+									<!-- AI Recommendations Placeholder -->
+									<div id="aiRecommendations"></div>
+								</div>
+
+								<!-- Error Section -->
+								<div id="errorSection" class="d-none">
+									<div class="alert alert-danger">
+										<div class="d-flex align-items-center">
+											<i
+												class="fas fa-exclamation-triangle fa-2x me-3"
+											></i>
+											<div>
+												<h5 class="mb-1">Analysis Error</h5>
+												<p id="errorMessage" class="mb-0">
+													An error occurred during analysis.
+												</p>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<!-- Initial Message -->
+								<div id="initialMessage" class="text-center text-muted">
+									<i
+										class="fas fa-arrow-left fa-3x mb-3 opacity-50"
+									></i>
+									<h5>Ready for Analysis</h5>
+									<p>
+										Fill in the patient information and click
+										"Analyze" to get started.
+									</p>
+									<small class="text-muted">
+										This system uses advanced machine learning models
+										trained on medical data to provide cardiovascular
+										risk assessment.
+									</small>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Usage Statistics (Footer) -->
+				<div class="row mt-4">
+					<div class="col-12">
+						<div class="card bg-light">
+							<div class="card-body">
+								<div class="row text-center">
+									<div class="col-md-3">
+										<div
+											class="d-flex align-items-center justify-content-center"
+										>
+											<i class="fas fa-brain text-primary me-2"></i>
+											<small
+												><strong>AI Models:</strong> 3
+												Algorithms</small
+											>
+										</div>
+									</div>
+									<div class="col-md-3">
+										<div
+											class="d-flex align-items-center justify-content-center"
+										>
+											<i class="fas fa-robot text-success me-2"></i>
+											<small
+												><strong>AI Recommendations:</strong>
+												DeepSeek Powered</small
+											>
+										</div>
+									</div>
+									<div class="col-md-3">
+										<div
+											class="d-flex align-items-center justify-content-center"
+										>
+											<i
+												class="fas fa-dollar-sign text-warning me-2"
+											></i>
+											<small
+												><strong>Cost:</strong> <$0.001 per
+												prediction</small
+											>
+										</div>
+									</div>
+									<div class="col-md-3">
+										<div
+											class="d-flex align-items-center justify-content-center"
+										>
+											<i
+												class="fas fa-shield-alt text-info me-2"
+											></i>
+											<small
+												><strong>Privacy:</strong> No data
+												stored</small
+											>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Bootstrap JS -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+		<!-- Custom JavaScript -->
+		<script src="{{ url_for('static', filename='script.js') }}"></script>
+	</body>
+</html>
