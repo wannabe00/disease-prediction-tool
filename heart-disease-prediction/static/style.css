@@ -1,0 +1,242 @@
+/* style.css - Member 4: Levan Bokuchava */
+
+body {
+	background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+	min-height: 100vh;
+	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.container-fluid {
+	background: rgba(255, 255, 255, 0.95);
+	margin: 20px;
+	border-radius: 15px;
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+	padding: 0;
+	overflow: hidden;
+}
+
+header {
+	background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+	border-radius: 15px 15px 0 0;
+}
+
+.card {
+	border: none;
+	border-radius: 15px;
+	transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+	transform: translateY(-5px);
+	box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+.card-header {
+	border-radius: 15px 15px 0 0 !important;
+	border: none;
+	font-weight: 600;
+}
+
+.form-control,
+.form-select {
+	border-radius: 10px;
+	border: 2px solid #e9ecef;
+	transition: all 0.3s ease;
+}
+
+.form-control:focus,
+.form-select:focus {
+	border-color: #667eea;
+	box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+}
+
+.form-range {
+	height: 6px;
+}
+
+.form-range::-webkit-slider-thumb {
+	background: #667eea;
+	border: none;
+	border-radius: 50%;
+	height: 20px;
+	width: 20px;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.btn-primary {
+	background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+	border: none;
+	border-radius: 10px;
+	padding: 12px 24px;
+	font-weight: 600;
+	transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.alert {
+	border: none;
+	border-radius: 10px;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.alert-success {
+	background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+	color: white;
+}
+
+.alert-warning {
+	background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+	color: white;
+}
+
+.alert-danger {
+	background: linear-gradient(135deg, #fc466b 0%, #3f5efb 100%);
+	color: white;
+}
+
+.alert-info {
+	background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+	color: white;
+}
+
+.spinner-border {
+	width: 3rem;
+	height: 3rem;
+}
+
+.progress {
+	height: 25px;
+	border-radius: 15px;
+	background-color: #f8f9fa;
+	box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.progress-bar {
+	border-radius: 15px;
+	transition: width 0.6s ease;
+}
+
+.bg-low-risk {
+	background: linear-gradient(90deg, #11998e 0%, #38ef7d 100%);
+}
+
+.bg-moderate-risk {
+	background: linear-gradient(90deg, #f093fb 0%, #f5576c 100%);
+}
+
+.bg-high-risk {
+	background: linear-gradient(90deg, #fc466b 0%, #3f5efb 100%);
+}
+
+#probabilityGauge {
+	border: 3px solid #e9ecef;
+	border-radius: 15px;
+	background: white;
+}
+
+.model-result {
+	background: rgba(255, 255, 255, 0.8);
+	border-radius: 10px;
+	padding: 10px;
+	margin: 5px 0;
+	border-left: 4px solid #667eea;
+	transition: all 0.3s ease;
+}
+
+.model-result:hover {
+	background: rgba(255, 255, 255, 1);
+	transform: translateX(5px);
+}
+
+.form-check-input:checked {
+	background-color: #667eea;
+	border-color: #667eea;
+}
+
+.form-check-input:focus {
+	border-color: #667eea;
+	box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+}
+
+/* Animation for results */
+@keyframes fadeInUp {
+	from {
+		opacity: 0;
+		transform: translateY(30px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.fade-in-up {
+	animation: fadeInUp 0.6s ease;
+}
+
+/* Risk level specific styling */
+.risk-low {
+	background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+	color: white;
+	border: none;
+}
+
+.risk-moderate {
+	background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+	color: white;
+	border: none;
+}
+
+.risk-high {
+	background: linear-gradient(135deg, #fc466b 0%, #3f5efb 100%);
+	color: white;
+	border: none;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+	.container-fluid {
+		margin: 10px;
+	}
+
+	.card {
+		margin-bottom: 20px;
+	}
+
+	.col-lg-6 {
+		padding: 10px;
+	}
+}
+
+/* Tooltip styling */
+.tooltip {
+	font-size: 12px;
+}
+
+.tooltip-inner {
+	background-color: #667eea;
+	border-radius: 6px;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+	width: 8px;
+}
+
+::-webkit-scrollbar-track {
+	background: #f1f1f1;
+	border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+	background: #667eea;
+	border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: #5a6fd8;
+}
