@@ -459,34 +459,34 @@ class EnhancedHeartDiseaseAPI:
                     }
             
             # Best model prediction
-           try:
-    best_prediction = self.best_model.predict(processed_input)[0]
-    raw_probability = self.best_model.predict_proba(processed_input)[0][1]
-    
-    # Extract patient info for calibration
-    age = float(input_data.get('age', 50))
-    risk_factors = {
-        'high_bp': int(input_data.get('blood_pressure', 120)) > 150,
-        'high_chol': int(input_data.get('cholesterol', 200)) > 250,
-        'exercise_angina': input_data.get('exercise_angina', 'no') == 'yes',
-        'male': input_data.get('sex') == 'male',
-        'chest_pain': int(input_data.get('chest_pain', 0)) <= 1
-    }
-    
-    # Calibrate probability to realistic range
-    best_probability = self.calibrate_probability(raw_probability, age, risk_factors)
-    
-    print(f"🏆 Best model ({self.best_model_name}): raw={raw_probability:.3f}, calibrated={best_probability:.3f}")
-    
-    # Update prediction based on calibrated probability
-    best_prediction = 1 if best_probability > 0.5 else 0
-    
-    # Sanity checks
-    if age < 35 and best_probability > 0.4:
-        print(f"🚨 ALERT: Young patient ({age}) with higher risk ({best_probability:.1%})")
-    elif age < 35 and best_probability < 0.3:
-        print(f"✅ GOOD: Young patient ({age}) correctly assessed as lower risk ({best_probability:.1%})")
+            try:
+                best_prediction = self.best_model.predict(processed_input)[0]
+                raw_probability = self.best_model.predict_proba(processed_input)[0][1]
                 
+                # Extract patient info for calibration
+                age = float(input_data.get('age', 50))
+                risk_factors = {
+                    'high_bp': int(input_data.get('blood_pressure', 120)) > 150,
+                    'high_chol': int(input_data.get('cholesterol', 200)) > 250,
+                    'exercise_angina': input_data.get('exercise_angina', 'no') == 'yes',
+                    'male': input_data.get('sex') == 'male',
+                    'chest_pain': int(input_data.get('chest_pain', 0)) <= 1
+                }
+                
+                # Calibrate probability to realistic range
+                best_probability = self.calibrate_probability(raw_probability, age, risk_factors)
+                
+                print(f"🏆 Best model ({self.best_model_name}): raw={raw_probability:.3f}, calibrated={best_probability:.3f}")
+                
+                # Update prediction based on calibrated probability
+                best_prediction = 1 if best_probability > 0.5 else 0
+                
+                # Sanity checks
+                if age < 35 and best_probability > 0.4:
+                    print(f"🚨 ALERT: Young patient ({age}) with higher risk ({best_probability:.1%})")
+                elif age < 35 and best_probability < 0.3:
+                    print(f"✅ GOOD: Young patient ({age}) correctly assessed as lower risk ({best_probability:.1%})")
+
                 result = {
                     'prediction': int(best_prediction),
                     'probability': float(best_probability),
@@ -502,7 +502,7 @@ class EnhancedHeartDiseaseAPI:
                         'input_validation': 'passed'
                     }
                 }
-                
+
                 return result
                 
             except Exception as best_model_error:
