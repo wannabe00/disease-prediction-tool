@@ -1,0 +1,14 @@
+/* style.css - Member 4: Levan Bokuchava */
+/* TODO: Copy the complete CSS styling code here */
+
+body {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.container {
+    padding: 20px;
+}
+
+/* Add more styles here */
